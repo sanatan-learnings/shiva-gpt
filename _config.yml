@@ -1,0 +1,29 @@
+title: "Shiva GPT"
+description: "Verse collection project powered by Sanatan Verse SDK"
+banner_title: "Shiva GPT"
+banner_subtitle: "Sacred verses & guided study"
+home_hero_subtitle_en: "Ask questions, explore verses, and deepen your devotional study with guided AI support."
+home_hero_subtitle_hi: "प्रश्न पूछें, श्लोकों का अध्ययन करें और मार्गदर्शित AI के साथ अपनी साधना को गहरा बनाएं।"
+project_repository_url: "https://github.com/<your-org>/<your-repo>"
+usage_guide_url: "#"
+ask_shiva_url: "#"
+search_verses_url: "#"
+shiva_quiz_url: "#"
+contribute_url: "#"
+markdown: kramdown
+collections:
+  verses:
+    output: true
+    permalink: /:path/
+plugins:
+  - jekyll-seo-tag
+defaults:
+  - scope:
+      path: ""
+      type: verses
+    values:
+      layout: verse
+exclude:
+  - README.md
+  - venv/
+  - .venv/

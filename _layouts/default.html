@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" type="image/x-icon">
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/print.css' | relative_url }}" media="print">
+    {% seo %}
+  </head>
+  {% assign active_collection_key = page.collection_key | default: page.collection %}
+  {% assign active_collection_cfg = site.data.collections[active_collection_key] %}
+  {% assign verse_defaults = site.data["verse-config"].defaults %}
+  {% assign configured_banner_theme = active_collection_cfg.banner_theme | default: verse_defaults.banner_theme | default: site.banner_theme %}
+  {% assign subject_hint = active_collection_cfg.subject | default: verse_defaults.subject | default: active_collection_key | default: site.title %}
+  {% assign subject_hint_lc = subject_hint | downcase %}
+  {% assign auto_banner_theme = 'saffron' %}
+  {% if subject_hint_lc contains 'shiv' or subject_hint_lc contains 'shiva' %}
+    {% assign auto_banner_theme = 'shiva' %}
+  {% elsif subject_hint_lc contains 'krishna' %}
+    {% assign auto_banner_theme = 'krishna' %}
+  {% elsif subject_hint_lc contains 'ram' or subject_hint_lc contains 'rama' %}
+    {% assign auto_banner_theme = 'rama' %}
+  {% endif %}
+  {% assign banner_theme = configured_banner_theme | default: auto_banner_theme %}
+  <body class="banner-theme-{{ banner_theme | slugify }}">
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <div class="header-title">
+            <h1><a href="{{ '/' | relative_url }}">{{ site.banner_title | default: site.title }}</a></h1>
+            <p class="subtitle">{{ site.banner_subtitle | default: site.description }}</p>
+          </div>
+          <div class="header-controls">
+            <div class="language-switcher">
+              <label for="languageSelect" class="sr-only">Language</label>
+              <select id="languageSelect" onchange="switchLanguage(this.value)">
+                <option value="en">🌐 English</option>
+                <option value="hi">🌐 हिन्दी</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      {{ content }}
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p class="footer-blessing">
+          <span data-lang="en">May divine wisdom guide your study and practice.</span>
+          <span data-lang="hi">ईश्वरीय ज्ञान आपकी साधना और अध्ययन का मार्गदर्शन करे।</span>
+        </p>
+        <nav class="footer-links" aria-label="Footer links">
+          <a href="{{ site.project_repository_url | default: '#' }}" target="_blank" rel="noopener">GitHub</a>
+          <a href="{{ site.usage_guide_url | default: '#' }}" target="_blank" rel="noopener">Usage Guide</a>
+          <a href="{{ site.ask_shiva_url | default: '#' }}" target="_blank" rel="noopener">Ask Shiva</a>
+          <a href="{{ site.shiva_quiz_url | default: '#' }}">Shiva Quiz</a>
+          <a href="{{ site.contribute_url | default: '#' }}" target="_blank" rel="noopener">Contribute</a>
+        </nav>
+      </div>
+    </footer>
+    <script src="{{ '/assets/js/navigation.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/language.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/guidance.js' | relative_url }}"></script>
+  </body>
+</html>
