@@ -1,0 +1,118 @@
+---
+layout: home
+title: Shiva GPT
+---
+
+{% assign has_enabled = false %}
+{% assign featured_key = '' %}
+{% for pair in site.data.collections %}
+  {% assign key = pair[0] %}
+  {% assign cfg = pair[1] %}
+  {% if cfg.enabled %}
+    {% assign has_enabled = true %}
+    {% if featured_key == '' %}
+      {% assign featured_key = key %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% if featured_key != '' %}
+  {% assign featured_cfg = site.data.collections[featured_key] %}
+  {% assign verse_defaults = site.data["verse-config"].defaults %}
+  {% assign featured_theme_name = featured_cfg.image_theme | default: featured_cfg.theme | default: featured_cfg.default_theme | default: verse_defaults.image_theme | default: verse_defaults.theme | default: verse_defaults.default_theme | default: 'modern-minimalist' %}
+{% endif %}
+
+<section class="collections-section">
+{% if featured_key != '' %}
+<section class="hero home-hero">
+  <div class="home-hero-media">
+    <img class="collection-hero-image" src="/images/site/{{ featured_theme_name }}/cover.png" alt="{{ site.title }} title image" />
+  </div>
+  <div class="home-hero-copy">
+    {% if site.home_hero_title_en or site.home_hero_title_hi %}
+    <h1>
+      <span data-lang="en">{{ site.home_hero_title_en }}</span>
+      <span data-lang="hi">{{ site.home_hero_title_hi | default: site.home_hero_title_en }}</span>
+    </h1>
+    {% endif %}
+    <p class="home-hero-subtitle">
+      <span data-lang="en">{{ site.home_hero_subtitle_en | default: site.banner_subtitle }}</span>
+      <span data-lang="hi">{{ site.home_hero_subtitle_hi | default: site.banner_subtitle_hi | default: site.home_hero_subtitle_en | default: site.banner_subtitle }}</span>
+    </p>
+    <div class="button-row">
+      <a class="button" href="{{ site.ask_shiva_url | default: '#' }}">
+        <span data-lang="en">Ask Shiva</span>
+        <span data-lang="hi">शिव से पूछें</span>
+      </a>
+      <a class="button secondary" href="{{ site.search_verses_url | default: '#' }}">
+        <span data-lang="en">Search Verses</span>
+        <span data-lang="hi">श्लोक खोजें</span>
+      </a>
+      <a class="button secondary" href="{{ site.shiva_quiz_url | default: '#' }}">
+        <span data-lang="en">Shiva Quiz</span>
+        <span data-lang="hi">शिव क्विज़</span>
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+  <h2><span data-lang="en">{{ site.data.translations.en.home.sacred_text | default: "Sacred Text" }}</span><span data-lang="hi">{{ site.data.translations.hi.home.sacred_text | default: "पवित्र ग्रंथ" }}</span></h2>
+{% if has_enabled %}
+<div class="home-collections-grid">
+{% for pair in site.data.collections %}
+  {% assign key = pair[0] %}
+  {% assign cfg = pair[1] %}
+  {% unless cfg.enabled %}{% continue %}{% endunless %}
+  {% assign verse_defaults = site.data["verse-config"].defaults %}
+  {% assign theme_name = cfg.image_theme | default: cfg.theme | default: cfg.default_theme | default: verse_defaults.image_theme | default: verse_defaults.theme | default: verse_defaults.default_theme | default: 'modern-minimalist' %}
+  {% assign generated_count = 0 %}
+  {% for verse in site.verses %}
+    {% if verse.collection_key == key %}
+      {% assign generated_count = generated_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+  <a class="home-collection-card" href="/{{ key }}/">
+    <div class="home-collection-card-bg" style="background-image: url('/images/{{ key }}/{{ theme_name }}/cover.png');"></div>
+    <div class="home-collection-card-overlay">
+      <div class="home-collection-card-header">
+        <div class="home-collection-title">{{ cfg.name.en | default: key }}</div>
+        {% if cfg.name.hi %}<div class="home-collection-title-hi">{{ cfg.name.hi }}</div>{% endif %}
+      </div>
+      {% assign author_en = cfg.author.en | default: cfg.author_en | default: cfg.author %}
+      {% assign author_hi = cfg.author.hi | default: cfg.author_hi | default: cfg.author %}
+      {% if author_en or author_hi %}
+      <p class="home-collection-author">
+        <span data-lang="en">{{ author_en }}</span>
+        <span data-lang="hi">{{ author_hi | default: author_en }}</span>
+      </p>
+      {% endif %}
+      {% assign desc_en = cfg.description.en | default: cfg.description_en | default: cfg.description %}
+      {% assign desc_hi = cfg.description.hi | default: cfg.description_hi | default: cfg.description %}
+      {% if desc_en or desc_hi %}
+      <p class="home-collection-description">
+        <span data-lang="en">{{ desc_en }}</span>
+        <span data-lang="hi">{{ desc_hi | default: desc_en }}</span>
+      </p>
+      {% endif %}
+      <div class="home-collection-card-footer">
+        <span class="home-collection-meta">
+          {% if cfg.total_verses %}
+            {{ generated_count }} of {{ cfg.total_verses }} verses
+          {% else %}
+            {{ generated_count }} verses
+          {% endif %}
+        </span>
+        <span class="home-collection-cta">
+          <span data-lang="en">Explore</span>
+          <span data-lang="hi">और देखें</span>
+        </span>
+      </div>
+    </div>
+  </a>
+{% endfor %}
+</div>
+{% else %}
+No enabled collections found in `_data/collections.yml`.
+{% endif %}
+</section>

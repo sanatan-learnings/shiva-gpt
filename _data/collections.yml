@@ -1,0 +1,25 @@
+# Collection registry
+# Add your verse collections here
+
+shiv-puran:
+  enabled: true
+  name:
+    en: "Shiv Puran"
+    hi: "शिव पुराण"
+  subdirectory: "shiv-puran"
+  permalink_base: "/shiv-puran"
+
+# Example:
+# hanuman-chalisa:
+#   enabled: true
+#   name:
+#     en: "Hanuman Chalisa"
+#     hi: "हनुमान चालीसा"
+#   subdirectory: "hanuman-chalisa"
+#   permalink_base: "/hanuman-chalisa"
+#   total_verses: 43
+#   # subject and subject_type are optional here if set in _data/verse-config.yml defaults
+#   # subject: Hanuman
+#   # subject_type: deity
+#   # banner_theme: shiva   # optional UI header palette override (e.g., shiva, saffron, krishna, rama)
+  total_verses: 381

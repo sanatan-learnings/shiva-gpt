@@ -1,0 +1,31 @@
+_meta:
+  collection: shiv-puran
+  description: Scene descriptions for Shiv Puran image generation
+scenes:
+  cover:
+    title: Shiv Puran Cover
+    description: 'Shiv Puran: Majestic Shiva portrait balancing stillness and power.
+
+      Primary subject: Lord Shiva in a Kailash-inspired cosmic mountain and meditative Shaiva ambience.
+
+      Mood and lighting: tranquil, ascetic, and deeply contemplative with soft divine glow.
+
+      Symbolic details: trishul, damaru, crescent moon, rudraksha, and sacred ash motifs.
+
+      Keep framing landscape-friendly (16:9) for collection card and collection hero usage.'
+  chapter-01-shloka-01:
+    title: Seeking Wisdom from the Enlightened [AI-Generated - Review Recommended]
+    description: A majestic scene unfolds in the serene heart of an ancient Indian forest at dusk, where the wise sage Shaunaka,
+      adorned in a simple white robe, sits in respectful attention, his hands folded in a gesture of reverence. Across from
+      him, the divinely radiant Soot MahaPrajna, a figure of supreme wisdom, sits on a higher, flower-adorned seat, his aura
+      glowing with the last rays of the setting sun filtering through the dense canopy. The focus is on the interaction between
+      the two, symbolizing the quest for knowledge, while the backdrop features ancient scriptures and sacred symbols etched
+      on the barks of the surrounding trees, creating an atmosphere of profound spiritual essence. The scene is bathed in
+      a soft, ethereal light, amplifying the tranquil and sacred mood of the discourse.
+  chapter-01-shloka-02:
+    title: The Path of Righteousness and Devotion [AI-Generated - Review Recommended]
+    description: A serene Himalayan landscape at dawn with soft golden sunlight filtering through the peaks. In the foreground,
+      the sage-like figure of Lord Shiva, seated in a meditative pose under a vibrant Bodhi tree, his calm visage radiating
+      wisdom. Surrounding him, a group of pure-hearted sages, their faces lit with reverence, are engaged in peaceful discourse
+      about truth and discernment. The composition focuses on Shiva, symbolizing divine wisdom, while the sages represent
+      the quest for knowledge and moral conduct. The scene evokes a sense of tranquility, enlightenment, and spiritual devotion.

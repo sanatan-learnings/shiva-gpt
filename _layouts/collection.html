@@ -1,0 +1,123 @@
+---
+layout: default
+---
+
+{% assign collection_key = page.collection_key | default: page.slug %}
+{% assign collection_cfg = site.data.collections[collection_key] %}
+{% assign verse_defaults = site.data["verse-config"].defaults %}
+{% assign theme_name = collection_cfg.image_theme | default: collection_cfg.theme | default: collection_cfg.default_theme | default: verse_defaults.image_theme | default: verse_defaults.theme | default: verse_defaults.default_theme | default: 'modern-minimalist' %}
+{% assign collection_name_en = collection_cfg.name.en | default: collection_cfg.name_en | default: collection_key %}
+{% assign collection_name_hi = collection_cfg.name.hi | default: collection_cfg.name_hi %}
+{% assign first_verse_url = '' %}
+{% for verse in site.verses %}
+  {% if verse.collection_key == collection_key %}
+    {% assign first_verse_url = verse.url %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<section class="collection-hero card">
+  <h1>
+    <span data-lang="en">{{ collection_name_en }}</span>
+    <span data-lang="hi">{{ collection_name_hi | default: collection_name_en }}</span>
+  </h1>
+  <p class="collection-intro">
+    <span data-lang="en">Explore verses, visuals, and devotional context for this collection.</span>
+    <span data-lang="hi">इस संग्रह के श्लोक, चित्र और भक्ति-संदर्भ देखें।</span>
+  </p>
+  <div class="collection-hero-media">
+    <img class="collection-hero-image" src="/images/{{ collection_key }}/{{ theme_name }}/cover.png" alt="{{ collection_cfg.name.en | default: collection_key }} title" />
+  </div>
+  {% assign verse_count = 0 %}
+  {% for verse in site.verses %}
+    {% if verse.collection_key == collection_key %}
+      {% assign verse_count = verse_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+  <p class="collection-meta">Total verses: {{ collection_cfg.total_verses | default: verse_count }}</p>
+  {% if first_verse_url != '' %}
+  <div class="button-row">
+    <a class="button" href="{{ first_verse_url }}">
+      <span data-lang="en">Start Reading</span>
+      <span data-lang="hi">पठन प्रारंभ करें</span>
+    </a>
+  </div>
+  {% endif %}
+</section>
+
+{% assign _all_collection_verses = site.verses | where: 'collection_key', collection_key %}
+{% assign _sorted_verses = _all_collection_verses | sort: 'verse_number' | sort: 'chapter' %}
+
+{% assign _chapters_concat = '' %}
+{% for verse in _sorted_verses %}
+  {% if verse.chapter %}
+    {% assign chapter_marker = verse.chapter | append: '||' %}
+    {% unless _chapters_concat contains chapter_marker %}
+      {% assign _chapters_concat = _chapters_concat | append: chapter_marker %}
+    {% endunless %}
+  {% endif %}
+{% endfor %}
+
+{% assign _chapter_list = _chapters_concat | split: '||' %}
+
+{% if _sorted_verses.size == 0 %}
+  <div class="card-subtitle">No verses generated yet for this collection.</div>
+{% else %}
+  {% if _chapter_list.size == 0 %}
+    {% assign _chapter_list = '1' | split: ',' %}
+  {% endif %}
+
+  {% for chapter_number in _chapter_list %}
+    {% if chapter_number == '' %}{% continue %}{% endif %}
+    {% assign chapter_verses = _sorted_verses | where: 'chapter', chapter_number %}
+    {% if chapter_verses.size == 0 %}
+      {% continue %}
+    {% endif %}
+    {% assign chapter_count = chapter_verses.size %}
+    {% assign sample = chapter_verses.first %}
+    {% assign chapter_title = sample.chapter_title | default: '' %}
+    {% assign verse_type = sample.verse_type | default: 'Shloka' %}
+    <section class="collection-chapter-section">
+      <header class="collection-chapter-header">
+        <h2 class="collection-chapter-title">
+          🎵 Chapter {{ chapter_number }}{% if chapter_title != '' %} – {{ chapter_title }}{% endif %}
+        </h2>
+        <span class="collection-chapter-count">
+          {{ chapter_count }} {{ verse_type | downcase }}{% if chapter_count != 1 %}s{% endif %}
+        </span>
+      </header>
+      <div class="verse-card-grid">
+        {% for verse in chapter_verses %}
+          {% assign verse_label = verse.title_en | default: verse.title | default: verse.verse_id | default: verse.basename %}
+          {% assign verse_id = verse.verse_id | default: verse.basename %}
+          {% assign verse_type = verse.verse_type | default: 'Verse' %}
+          {% assign verse_num = verse.verse_number | default: forloop.index %}
+          {% assign verse_image = verse.image %}
+          {% if verse_image == nil or verse_image == '' %}
+            {% assign verse_image = '/images/' | append: collection_key | append: '/' | append: theme_name | append: '/' | append: verse_id | append: '.png' %}
+          {% endif %}
+          {% assign verse_image_for_static = verse_image %}
+          {% assign verse_image_fallback = '/images/' | append: collection_key | append: '/' | append: theme_name | append: '/cover.png' %}
+          {% assign has_verse_image = false %}
+          {% for static_file in site.static_files %}
+            {% if static_file.path == verse_image_for_static %}
+              {% assign has_verse_image = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          <a class="card verse-card" href="{{ verse.url }}">
+            {% if has_verse_image %}
+            <img class="verse-card-image" src="{{ verse_image }}" alt="{{ verse_label }} image" loading="lazy" />
+            {% else %}
+            <img class="verse-card-image" src="{{ verse_image_fallback }}" alt="{{ verse_label }} image" loading="lazy" />
+            {% endif %}
+            <div class="verse-card-label">
+              {{ verse_type | upcase }} {{ verse_num }}
+            </div>
+            <div class="verse-card-title">{{ verse_label }}</div>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+{% endif %}
