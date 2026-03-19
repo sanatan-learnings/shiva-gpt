@@ -11,7 +11,7 @@ layout: default
 {% assign first_verse_url = '' %}
 {% for verse in site.verses %}
   {% if verse.collection_key == collection_key %}
-    {% assign first_verse_url = verse.url %}
+    {% assign first_verse_url = verse.url | relative_url %}
     {% break %}
   {% endif %}
 {% endfor %}
@@ -105,7 +105,7 @@ layout: default
               {% break %}
             {% endif %}
           {% endfor %}
-          <a class="card verse-card" href="{{ verse.url }}">
+          <a class="card verse-card" href="{{ verse.url | relative_url }}">
             {% if has_verse_image %}
             <img class="verse-card-image" src="{{ verse_image | relative_url }}" alt="{{ verse_label }} image" loading="lazy" />
             {% else %}
