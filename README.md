@@ -2,7 +2,23 @@
 
 🌐 **View the live interactive website →** [https://sanatan-learnings.github.io/shiva-gpt/](https://sanatan-learnings.github.io/shiva-gpt/)
 
-## Setup
+## About
+
+A verse collection project powered by Sanatan Verse SDK for studying sacred texts in a clean, bilingual UI.
+It supports canonical, chapter/shloka-ordered reading and generates AI-powered visuals and audio for a more guided experience.
+
+## Features
+
+- Collection-based browsing with chapter/shloka navigation
+- Bilingual reading (English + Hindi)
+- AI-generated verse content (transliteration, meanings, translations, story/context)
+- AI-generated images per verse
+- AI-generated audio pronunciations (full + slow speed)
+- Interactive site UX: Explore, Search Verses, Shiva Quiz, and Ask Shiva
+
+## For Developers
+
+### Setup
 
 1. **Install dependencies** (always use a **virtual environment** — do not install the SDK into the system Python)
    ```bash
