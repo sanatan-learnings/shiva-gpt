@@ -4,8 +4,8 @@
 
 ## About
 
-A verse collection project powered by Sanatan Verse SDK for studying sacred texts in a clean, bilingual UI.
-It supports canonical, chapter/shloka-ordered reading and generates AI-powered visuals and audio for a more guided experience.
+A bilingual verse collection site built with Sanatan Verse SDK, focused on **Shiva Puran** (the `shiv-puran` collection: **381 verses**).
+It presents the text in **chapter/shloka order**, with AI-generated verse content plus matching **images** and **audio pronunciations** (full + slow speed) to support an interactive, guided study experience.
 
 ## Features
 
