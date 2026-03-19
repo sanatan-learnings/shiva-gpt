@@ -62,7 +62,8 @@ layout: default
   </header>
 
   <figure class="verse-figure">
-    <img class="verse-hero-image" src="{{ page.image | default: auto_image }}" alt="{{ page.title_en | default: page.title | default: verse_slug }}" loading="lazy" />
+    {% assign _verse_img = page.image | default: auto_image %}
+    <img class="verse-hero-image" src="{{ _verse_img | relative_url }}" alt="{{ page.title_en | default: page.title | default: verse_slug }}" loading="lazy" />
   </figure>
 
   {% if page.devanagari != blank %}

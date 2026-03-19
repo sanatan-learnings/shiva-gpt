@@ -26,7 +26,7 @@ title: Shiva GPT
 {% if featured_key != '' %}
 <section class="hero home-hero">
   <div class="home-hero-media">
-    <img class="collection-hero-image" src="/images/site/{{ featured_theme_name }}/cover.png" alt="{{ site.title }} title image" />
+    <img class="collection-hero-image" src="{{ '/images/site/' | append: featured_theme_name | append: '/cover.png' | relative_url }}" alt="{{ site.title }} title image" />
   </div>
   <div class="home-hero-copy">
     {% if site.home_hero_title_en or site.home_hero_title_hi %}
@@ -72,8 +72,8 @@ title: Shiva GPT
       {% assign generated_count = generated_count | plus: 1 %}
     {% endif %}
   {% endfor %}
-  <a class="home-collection-card" href="/{{ key }}/">
-    <div class="home-collection-card-bg" style="background-image: url('/images/{{ key }}/{{ theme_name }}/cover.png');"></div>
+  <a class="home-collection-card" href="{{ '/' | append: key | append: '/' | relative_url }}">
+    <div class="home-collection-card-bg" style="background-image: url('{{ '/images/' | append: key | append: '/' | append: theme_name | append: '/cover.png' | relative_url }}');"></div>
     <div class="home-collection-card-overlay">
       <div class="home-collection-card-header">
         <div class="home-collection-title">{{ cfg.name.en | default: key }}</div>

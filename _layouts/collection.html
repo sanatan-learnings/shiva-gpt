@@ -26,7 +26,7 @@ layout: default
     <span data-lang="hi">इस संग्रह के श्लोक, चित्र और भक्ति-संदर्भ देखें।</span>
   </p>
   <div class="collection-hero-media">
-    <img class="collection-hero-image" src="/images/{{ collection_key }}/{{ theme_name }}/cover.png" alt="{{ collection_cfg.name.en | default: collection_key }} title" />
+    <img class="collection-hero-image" src="{{ '/images/' | append: collection_key | append: '/' | append: theme_name | append: '/cover.png' | relative_url }}" alt="{{ collection_cfg.name.en | default: collection_key }} title" />
   </div>
   {% assign verse_count = 0 %}
   {% for verse in site.verses %}
@@ -107,9 +107,9 @@ layout: default
           {% endfor %}
           <a class="card verse-card" href="{{ verse.url }}">
             {% if has_verse_image %}
-            <img class="verse-card-image" src="{{ verse_image }}" alt="{{ verse_label }} image" loading="lazy" />
+            <img class="verse-card-image" src="{{ verse_image | relative_url }}" alt="{{ verse_label }} image" loading="lazy" />
             {% else %}
-            <img class="verse-card-image" src="{{ verse_image_fallback }}" alt="{{ verse_label }} image" loading="lazy" />
+            <img class="verse-card-image" src="{{ verse_image_fallback | relative_url }}" alt="{{ verse_label }} image" loading="lazy" />
             {% endif %}
             <div class="verse-card-label">
               {{ verse_type | upcase }} {{ verse_num }}

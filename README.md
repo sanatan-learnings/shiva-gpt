@@ -2,8 +2,6 @@
 
 Verse collection project powered by [Sanatan Verse SDK](https://github.com/sanatan-learnings/sanatan-verse-sdk).
 
-**Jekyll output:** `bundle exec jekyll serve` / `jekyll build` writes the compiled site to `_site/` (and cache under `.jekyll-cache/`). Source of truth is this repo (`index.html`, `_verses/`, `images/`, `audio/`, etc.); `_site/` is regenerated each build and is gitignored.
-
 ## Setup
 
 1. **Install dependencies**
@@ -17,18 +15,50 @@ Verse collection project powered by [Sanatan Verse SDK](https://github.com/sanat
    # Edit .env and add your API keys
    ```
 
-3. **Add your collections**
-   - Edit `_data/collections.yml` to define your collections
-   - Create verse files in `_verses/<collection-key>/`
-   - Add canonical text in `data/verses/<collection>.yaml`
+3. **Add/extend an existing collection**
+   Canonical plain-text input lives in:
+   - `data/sources/<collection>.txt` (or `data/sources/<collection>/*.txt`)
 
-4. **Generate content**
+   Run `verse-parse-source` once per collection:
    ```bash
-   # List available collections
-   verse-generate --list-collections
+   # Parse canonical source into data/verses/<collection>.yaml
+   # Run this once per collection (re-run only if you update data/sources/<collection>.txt)
+   verse-parse-source --collection <collection>
+   ```
 
-   # Generate multimedia content
-   verse-generate --collection <collection-key> --verse 1
+   Then iterate until the verse looks good:
+   - `verse-generate --collection <collection> --next`
+   - Review/edit generated markdown in `_verses/<collection>/`
+   - Preview by refreshing the page while `bundle exec jekyll serve` is running
+
+Full CLI options: [verse-generate docs](https://github.com/sanatan-learnings/sanatan-verse-sdk/blob/main/docs/commands/verse-generate.md).
+
+   To regenerate a specific verse after edits (requires `--regenerate-content` because it redoes AI text):
+   ```bash
+   verse-generate --collection <collection> --verse <position> --regenerate-content
+   ```
+   where `<position>` is the 1-based position in the canonical sequence from `data/verses/<collection>.yaml`.
+   If you want to regenerate media too, add `--image` / `--audio`.
+
+4. **Add a new collection**
+   Scaffold a new collection:
+   ```bash
+   verse-init --collection <new-collection>
+   ```
+
+   Add canonical input under `data/sources/<new-collection>.txt`, then run:
+   ```bash
+   # Parse canonical source into data/verses/<new-collection>.yaml
+   # Run this once for the new collection (re-run only if you update data/sources/<new-collection>.txt)
+   verse-parse-source --collection <new-collection>
+   ```
+
+   Then repeat the same iteration loop shown above (generate with `verse-generate --collection <new-collection> --next`, review/edit `_verses/<new-collection>/`, and preview by refreshing while `bundle exec jekyll serve` is running).
+
+5. **Serve the site locally**
+   ```bash
+   bundle install
+   bundle exec jekyll serve
    ```
 
 ## Project Structure
@@ -39,19 +69,19 @@ shiva-gpt/
 │   ├── collections.yml          # Collection registry
 │   └── verse-config.yml         # Project-level defaults (subject, subject_type)
 ├── _verses/
-│   └── <collection-key>/        # Verse markdown files
+│   └── <collection-key>/        # Generated verse markdown files (review/edit here)
 ├── data/
 │   ├── themes/
 │   │   └── <collection-key>/    # Theme configurations
 │   ├── verses/
-│   │   └── <collection>.yaml    # Canonical verse text
+│   │   └── <collection>.yaml    # Canonical verse text (output of verse-parse-source)
 │   ├── scenes/                  # Scene descriptions for image generation
-│   ├── sources/                 # Source texts for RAG indexing
+│   ├── sources/                 # Canonical plain-text input for verse-parse-source
 │   ├── puranic-index/           # Indexed Puranic episodes
 │   └── embeddings/              # Vector embeddings
 │       └── puranic/             # Puranic source embeddings
-├── images/                      # Generated images (gitignored)
-├── audio/                       # Generated MP3s (commit for static hosting)
+├── images/                      # Generated images (typically gitignored)
+├── audio/                       # Generated MP3s
 └── .env                         # API keys (gitignored)
 ```
 

@@ -9,7 +9,7 @@ verse_number: 2
 section_verse_number: 2
 verse_type: shloka
 previous_verse: /shiv-puran/chapter-01-shloka-01/
-next_verse: /shiv-puran/
+next_verse: /shiv-puran/chapter-01-shloka-03/
 image: /images/shiv-puran/modern-minimalist/chapter-01-shloka-02.png
 devanagari: सदाचारश्च सद्भक्तिर्विवेको वर्धते कथम् । स्वविकारनिरासश्च सज्जनैः क्रियते कथम् ॥ २॥
 transliteration: sadācāraśca sadbhaktirviveko vardhate katham | svavikāranirāśaśca sajjanaiḥ kriyate katham ॥ २॥
