@@ -1,11 +1,13 @@
 # Shiva GPT
 
-Verse collection project powered by [Sanatan Verse SDK](https://github.com/sanatan-learnings/sanatan-verse-sdk).
+🌐 **View the live interactive website →** [https://sanatan-learnings.github.io/shiva-gpt/](https://sanatan-learnings.github.io/shiva-gpt/)
 
 ## Setup
 
-1. **Install dependencies**
+1. **Install dependencies** (always use a **virtual environment** — do not install the SDK into the system Python)
    ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate   # Windows: .venv\Scripts\activate
    pip install sanatan-verse-sdk
    ```
 
